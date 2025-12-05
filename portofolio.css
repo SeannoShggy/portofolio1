@@ -6,6 +6,13 @@
      padding: 0;
      box-sizing: border-box;
 }
+/* BLOCK HORIZONTAL SCROLL — safe quick fix */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  min-width: 0;
+}
+
  body {
      font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
      background: #252424;
@@ -937,3 +944,4 @@
  ::-webkit-scrollbar-thumb:hover {
      background: linear-gradient(45deg,  #ffcc00 , #005dce);
 }
+
