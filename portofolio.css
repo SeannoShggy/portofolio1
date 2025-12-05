@@ -7,11 +7,75 @@
      box-sizing: border-box;
 }
 /* BLOCK HORIZONTAL SCROLL — safe quick fix */
+/* ====== Safety fixes to prevent horizontal overflow ====== */
+
+/* ensure box sizing already set (you have it but safe) */
 html, body {
-  overflow-x: hidden;
-  width: 100%;
-  min-width: 0;
+  max-width: 100vw; /* guard against elements extending viewport width */
+  overflow-x: hidden; /* keep this */
+  position: relative; /* help containing absolute children on some browsers */
 }
+
+/* clip big decorative sections so they can't cause page overflow */
+.geometric-shapes,
+.features,
+.contact-info,
+.neural-lines {
+  overflow: hidden;   /* important: clip absolutely-positioned decorative children */
+  max-width: 100%;
+}
+
+/* limit shapes so they won't extend horizontally */
+.geometric-shapes .shape,
+.shape.x-clip {
+  max-width: 45vw;    /* prevents shape width from exceeding viewport on small screens */
+  max-height: 45vw;
+  box-sizing: border-box;
+  left: auto;         /* we will set horizontal position more safely below if needed */
+}
+
+/* safer position for x-clip on small screens */
+@media (max-width: 600px) {
+  .shape.x-clip {
+    left: 85%;
+    transform: translate(-50%, -50%) scale(0.8);
+    top: 50%;
+  }
+}
+
+/* reduce large pseudo elements so they don't overflow */
+.hero-subtitle::before,
+.hero-subtitle::after {
+  width: 25px;
+  left: -35px;
+  right: -35px;
+}
+
+/* make decorative big pseudo's (like contact-info::before) not overflow page */
+.contact-info::before {
+  left: 50%;
+  transform: translateX(-50%); /* center it inside contact-info */
+  width: 120%;                 /* smaller than 200% to avoid horizontal overflow */
+  height: 120%;
+  pointer-events: none;
+}
+
+/* fix invalid background syntax on neural-line */
+.neural-line {
+  /* replace the broken declaration */
+  background: #005dce;
+}
+
+/* final safety: force any element not to exceed viewport width */
+* {
+  max-width: 100vw;
+}
+
+/* but allow content blocks to use full width inside container */
+.container, .features-container, .contact-container, .hero-content {
+  max-width: 100%;
+}
+
 
  body {
      font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -944,4 +1008,5 @@ html, body {
  ::-webkit-scrollbar-thumb:hover {
      background: linear-gradient(45deg,  #ffcc00 , #005dce);
 }
+
 
