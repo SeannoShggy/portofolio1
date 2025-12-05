@@ -1,5 +1,4 @@
 
-@charset "utf-8";
 /* CSS Document */
  * {
      margin: 0;
@@ -1008,5 +1007,6 @@ html, body {
  ::-webkit-scrollbar-thumb:hover {
      background: linear-gradient(45deg,  #ffcc00 , #005dce);
 }
+
 
 
